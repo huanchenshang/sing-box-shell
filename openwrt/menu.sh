@@ -29,7 +29,6 @@ BASE_URL="https://ghfast.top/https://raw.githubusercontent.com/huanchenshang/sin
 SCRIPTS=(
     "check_environment.sh"     # 检查系统环境
     "install_singbox.sh"       # 安装 Sing-box
-    "auto_update.sh"           # 自动更新配置
     "configure_tproxy.sh"      # 配置 TProxy 模式
     "configure_tun.sh"         # 配置 TUN 模式
     "start_singbox.sh"         # 启动Sing-box
@@ -157,16 +156,13 @@ fi
 # 菜单显示
 show_menu() {
     echo -e "${CYAN}=========== Sbshell 管理菜单 ===========${NC}"
-    echo -e "${GREEN}1. Tproxy/Tun模式切换${NC}"
-    echo -e "${GREEN}2. 手动更新配置文件${NC}"
-    echo -e "${GREEN}3. 自动更新配置文件${NC}"
-    echo -e "${GREEN}4. 启动Sing-box${NC}"
-    echo -e "${GREEN}5. 停止sing-box${NC}"
-    echo -e "${GREEN}6. 默认参数设置${NC}"
-    echo -e "${GREEN}7. 设置自启动${NC}"
-    echo -e "${GREEN}8. 常用命令${NC}"
-    echo -e "${GREEN}9. 更新脚本${NC}"
-    echo -e "${GREEN}10. 更新控制面板${NC}"
+    echo -e "${GREEN}1. 启动Sing-box${NC}"
+    echo -e "${GREEN}2. 停止sing-box${NC}"
+    echo -e "${GREEN}3. Tproxy/Tun模式切换${NC}"
+    echo -e "${GREEN}4. 设置自启动${NC}"
+    echo -e "${GREEN}5. 常用命令${NC}"
+    echo -e "${GREEN}6. 更新脚本${NC}"
+    echo -e "${GREEN}7. 更新控制面板${NC}"
     echo -e "${GREEN}0. 退出${NC}"
     echo -e "${CYAN}=======================================${NC}"
 }
@@ -176,28 +172,24 @@ handle_choice() {
     read -rp "请选择操作: " choice
     case $choice in
         1)
-            bash "$SCRIPT_DIR/switch_mode.sh"
             bash "$SCRIPT_DIR/start_singbox.sh"
             ;;
         2)
-            bash "$SCRIPT_DIR/auto_update.sh"
-            ;;
-        3)
-            bash "$SCRIPT_DIR/start_singbox.sh"
-            ;;
-        4)
             bash "$SCRIPT_DIR/stop_singbox.sh"
             ;;
-        5)
+        3)
+            bash "$SCRIPT_DIR/switch_mode.sh"
+            ;;
+        4)
             bash "$SCRIPT_DIR/manage_autostart.sh"
             ;;
-        6)
+        5)
             bash "$SCRIPT_DIR/commands.sh"
             ;;
-        7)
+        6)
             bash "$SCRIPT_DIR/update_scripts.sh"
             ;;
-        8)
+        7)
             bash "$SCRIPT_DIR/update_ui.sh"
             ;;
         0)

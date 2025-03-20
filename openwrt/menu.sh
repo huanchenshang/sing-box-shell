@@ -23,16 +23,17 @@ if ! grep -qi 'openwrt' /etc/os-release; then
 fi
 
 # 脚本的URL基础路径
-BASE_URL="https://ghfast.top/https://raw.githubusercontent.com/qichiyuhub/sbshell/refs/heads/master/openwrt"
+BASE_URL="https://ghfast.top/https://raw.githubusercontent.com/huanchenshang/sing-box-shell/refs/heads/main/openwrt"
 
 # 脚本列表
 SCRIPTS=(
     "check_environment.sh"     # 检查系统环境
     "install_singbox.sh"       # 安装 Sing-box
+    "auto_update.sh"           # 自动更新配置
     "configure_tproxy.sh"      # 配置 TProxy 模式
     "configure_tun.sh"         # 配置 TUN 模式
-    "start_singbox.sh"         # 手动启动 Sing-box
-    "stop_singbox.sh"          # 手动停止 Sing-box
+    "start_singbox.sh"         # 启动Sing-box
+    "stop_singbox.sh"          # 停止sing-box
     "clean_nft.sh"             # 清理 nftables 规则
     "commands.sh"              # 常用命令
     "switch_mode.sh"           # 切换代理模式
@@ -85,7 +86,7 @@ check_and_download_scripts() {
         fi
     done
 
-    if [ "${#missing_scripts[@]}" -ne 0 ]; then
+    if [ ${#missing_scripts[@]} -ne 0 ]; then
         echo -e "${CYAN}正在下载脚本，请耐心等待...${NC}"
         for SCRIPT in "${missing_scripts[@]}"; do
             download_script "$SCRIPT" || {
@@ -157,12 +158,15 @@ fi
 show_menu() {
     echo -e "${CYAN}=========== Sbshell 管理菜单 ===========${NC}"
     echo -e "${GREEN}1. Tproxy/Tun模式切换${NC}"
-    echo -e "${GREEN}2. 手动启动 sing-box${NC}"
-    echo -e "${GREEN}3. 手动停止 sing-box${NC}"
-    echo -e "${GREEN}4. 设置自启动${NC}"
-    echo -e "${GREEN}5. 常用命令${NC}"
-    echo -e "${GREEN}6. 更新脚本${NC}"
-    echo -e "${GREEN}7. 更新控制面板${NC}"
+    echo -e "${GREEN}2. 手动更新配置文件${NC}"
+    echo -e "${GREEN}3. 自动更新配置文件${NC}"
+    echo -e "${GREEN}4. 启动Sing-box${NC}"
+    echo -e "${GREEN}5. 停止sing-box${NC}"
+    echo -e "${GREEN}6. 默认参数设置${NC}"
+    echo -e "${GREEN}7. 设置自启动${NC}"
+    echo -e "${GREEN}8. 常用命令${NC}"
+    echo -e "${GREEN}9. 更新脚本${NC}"
+    echo -e "${GREEN}10. 更新控制面板${NC}"
     echo -e "${GREEN}0. 退出${NC}"
     echo -e "${CYAN}=======================================${NC}"
 }
@@ -176,21 +180,24 @@ handle_choice() {
             bash "$SCRIPT_DIR/start_singbox.sh"
             ;;
         2)
-            bash "$SCRIPT_DIR/start_singbox.sh"
+            bash "$SCRIPT_DIR/auto_update.sh"
             ;;
         3)
-            bash "$SCRIPT_DIR/stop_singbox.sh"
+            bash "$SCRIPT_DIR/start_singbox.sh"
             ;;
         4)
-            bash "$SCRIPT_DIR/manage_autostart.sh"
+            bash "$SCRIPT_DIR/stop_singbox.sh"
             ;;
         5)
-            bash "$SCRIPT_DIR/commands.sh"
+            bash "$SCRIPT_DIR/manage_autostart.sh"
             ;;
         6)
-            bash "$SCRIPT_DIR/update_scripts.sh"
+            bash "$SCRIPT_DIR/commands.sh"
             ;;
         7)
+            bash "$SCRIPT_DIR/update_scripts.sh"
+            ;;
+        8)
             bash "$SCRIPT_DIR/update_ui.sh"
             ;;
         0)

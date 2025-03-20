@@ -127,7 +127,6 @@ auto_setup() {
     bash "$SCRIPT_DIR/check_environment.sh"
     command -v sing-box &> /dev/null || bash "$SCRIPT_DIR/install_singbox.sh" || bash "$SCRIPT_DIR/check_update.sh"
     bash "$SCRIPT_DIR/switch_mode.sh"
-    bash "$SCRIPT_DIR/manual_input.sh"
     bash "$SCRIPT_DIR/start_singbox.sh"  
 }
 

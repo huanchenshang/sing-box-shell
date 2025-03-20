@@ -85,7 +85,7 @@ check_and_download_scripts() {
         fi
     done
 
-    if [ ${#missing_scripts[@]} -ne 0 ]; then
+    if [ "${#missing_scripts[@]}" -ne 0 ]; then
         echo -e "${CYAN}正在下载脚本，请耐心等待...${NC}"
         for SCRIPT in "${missing_scripts[@]}"; do
             download_script "$SCRIPT" || {
